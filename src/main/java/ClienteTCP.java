@@ -3,7 +3,6 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class ClienteTCP {
-    private static final String LOG_FILE = "FichLog.txt";
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
