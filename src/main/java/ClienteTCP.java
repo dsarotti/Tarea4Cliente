@@ -7,12 +7,12 @@ public class ClienteTCP {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Socket socket = null;
-        ObjectOutputStream out = null;
+        PrintWriter salida = null;
         ObjectInputStream in = null;
 
         try {
             socket = new Socket("localhost", 12345);
-            out = new ObjectOutputStream(socket.getOutputStream());
+            salida = new PrintWriter(socket.getOutputStream(), true);
             in = new ObjectInputStream(socket.getInputStream());
 
             // Obtener el identificador asignado por el servidor
@@ -29,8 +29,7 @@ public class ClienteTCP {
 
                 try {
                     int idProfesor = Integer.parseInt(input);
-                    out.writeInt(idProfesor);
-                    out.flush();
+                    salida.println(idProfesor);
 
                     // Recibir y mostrar datos del profesor
                     Object obj = in.readObject();
@@ -51,7 +50,7 @@ public class ClienteTCP {
             if (socket != null && !socket.isClosed()) {
                 try {
                     // Cerrar recursos
-                    out.close();
+                    salida.close();
                     in.close();
                     socket.close();
                 } catch (IOException e) {
