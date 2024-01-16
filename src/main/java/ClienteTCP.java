@@ -18,6 +18,8 @@ public class ClienteTCP {
         PrintWriter salida = null;
         ObjectInputStream in = null;
 
+
+        System.out.println("PROGRAMA CLIENTE INICIADO...");
         try {
             // Establecer conexión con el servidor
             socket = new Socket("localhost", 12345);
@@ -27,6 +29,7 @@ public class ClienteTCP {
             // Obtener el identificador asignado por el servidor
             int clienteId = in.readInt();
             System.out.println("SOY EL CLIENTE: " + clienteId);
+            System.out.println("============================================================");
 
             // Ciclo principal para realizar consultas al servidor
             while (true) {
@@ -48,7 +51,7 @@ public class ClienteTCP {
                         Profesor profesor = (Profesor) obj;
                         mostrarDatosProfesor(profesor);
                     } else {
-                        System.out.println("Profesor no encontrado");
+                        System.out.println("No se ha recibido un profesor.");
                     }
                 } catch (NumberFormatException e) {
                     System.out.println("Por favor, introduce un identificador válido.");
@@ -77,12 +80,14 @@ public class ClienteTCP {
      * @param profesor El objeto Profesor cuyos datos se mostrarán.
      */
     private static void mostrarDatosProfesor(Profesor profesor) {
-        System.out.println("Nombre: " + profesor.getNombre() +
-                ", Especialidad: " + profesor.getEspecialidad().getId() + " - " + profesor.getEspecialidad().getNombreEspecialidad());
+        System.out.println(("Nombre: " + profesor.getNombre() + ", Especialidad: " + profesor.getEspecialidad().getId() + " - " + profesor.getEspecialidad().getNombreEspecialidad()).indent(4).stripTrailing());
 
-        System.out.println("Asignaturas:");
-        for (Asignatura asignatura : profesor.getAsignaturas()) {
-            System.out.println(" - " + asignatura.getId() + " - " + asignatura.getNombreAsignatura());
+        if(profesor.getAsignaturas().length>0){
+            for (Asignatura asignatura : profesor.getAsignaturas()) {
+                System.out.println(("Asignatura: " + asignatura.getId() + " - " + asignatura.getNombreAsignatura()).indent(8).stripTrailing());
+            }
         }
+        System.out.println("============================================================");
+
     }
 }
