@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Scanner;
 
 /**
@@ -56,11 +57,14 @@ public class ClienteTCP {
                         break;
                     }
                     System.out.println("Por favor, introduce un identificador válido.");
+                } catch (SocketException e ){
+                    System.err.println("El servidor ha dejado de responder. Cerrando el cliente.");
+                    break;
                 }
             }
 
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            System.err.println("Conexión rechazada por el servidor.");
         } finally {
             // Cerrar recursos al finalizar
             if (socket != null && !socket.isClosed()) {
