@@ -36,9 +36,6 @@ public class ClienteTCP {
                 System.out.print("Introduce identificador a consultar (* para salir): ");
                 String input = scanner.nextLine();
 
-                if (input.equals("*")) {
-                    break;
-                }
 
                 try {
                     // Enviar identificador al servidor
@@ -54,6 +51,10 @@ public class ClienteTCP {
                         System.out.println("No se ha recibido un profesor.");
                     }
                 } catch (NumberFormatException e) {
+                    if (input.equals("*")) {
+                        salida.println(input);
+                        break;
+                    }
                     System.out.println("Por favor, introduce un identificador válido.");
                 }
             }
@@ -82,7 +83,7 @@ public class ClienteTCP {
     private static void mostrarDatosProfesor(Profesor profesor) {
         System.out.println(("Nombre: " + profesor.getNombre() + ", Especialidad: " + profesor.getEspecialidad().getId() + " - " + profesor.getEspecialidad().getNombreEspecialidad()).indent(4).stripTrailing());
 
-        if(profesor.getAsignaturas().length>0){
+        if (profesor.getAsignaturas().length > 0) {
             for (Asignatura asignatura : profesor.getAsignaturas()) {
                 System.out.println(("Asignatura: " + asignatura.getId() + " - " + asignatura.getNombreAsignatura()).indent(8).stripTrailing());
             }
